@@ -38,3 +38,10 @@ lazy = true
 size = "40% 90%"
 unfocus = "hide"
 
+[scratchpads.obsidian]
+animation = "fromTop"
+command = "obsidian 'obsidian://open?vault=Vortex&file=00-Hub%2F%F0%9F%9A%80%20Dashboard%20Principal'"
+class = "obsidian"
+size = "85% 70%"
+lazy = true
+
