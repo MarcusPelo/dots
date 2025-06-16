@@ -1,0 +1,81 @@
+# Arquivos temporários e cache do sistema
+~/.cache/
+~/.local/share/Trash/
+
+# Dados sensíveis
+~/.ssh/id_*
+~/.ssh/known_hosts
+~/.gnupg/
+
+# Configurações de aplicações que não queremos versionar
+~/.config/Code/
+~/.config/Code - OSS/
+~/.config/obsidian/
+~/.config/pulse/
+~/.config/dconf/
+~/.config/session/
+
+# Dados do navegador Zen (exceto configurações específicas)
+~/.zen/*/addonStartup.json.lz4
+~/.zen/*/AlternateServices.bin
+~/.zen/*/autofill-profiles.json
+~/.zen/*/bookmarkbackups/
+~/.zen/*/bounce-tracking-protection.sqlite*
+~/.zen/*/broadcast-listeners.json
+~/.zen/*/cert9.db
+~/.zen/*/cert_override.txt
+~/.zen/*/compatibility.ini
+~/.zen/*/containers.json
+~/.zen/*/content-prefs.sqlite*
+~/.zen/*/cookies.sqlite*
+~/.zen/*/datareporting/
+~/.zen/*/domain_to_categories.sqlite*
+~/.zen/*/extension-preferences.json
+~/.zen/*/extensions/
+~/.zen/*/extensions.json
+~/.zen/*/extension-store/
+~/.zen/*/extension-store-menus/
+~/.zen/*/favicons.sqlite*
+~/.zen/*/features/
+~/.zen/*/formhistory.sqlite*
+~/.zen/*/gmp-*/
+~/.zen/*/handlers.json
+~/.zen/*/key4.db
+~/.zen/*/lock
+~/.zen/*/logins*.json
+~/.zen/*/.parentlock
+~/.zen/*/permissions.sqlite*
+~/.zen/*/pkcs11.txt
+~/.zen/*/places.sqlite*
+~/.zen/*/prefs.js
+~/.zen/*/protections.sqlite*
+~/.zen/*/search.json.mozlz4
+~/.zen/*/security_state/
+~/.zen/*/serviceworker.txt
+~/.zen/*/sessionCheckpoints.json
+~/.zen/*/sessionstore-backups/
+~/.zen/*/sessionstore.jsonlz4
+~/.zen/*/settings/
+~/.zen/*/shield-preference-experiments.json
+~/.zen/*/signedInUser.json
+~/.zen/*/SiteSecurityServiceState.bin
+~/.zen/*/storage/
+~/.zen/*/storage*.sqlite*
+~/.zen/*/synced-tabs.db
+~/.zen/*/times.json
+~/.zen/*/weave/
+~/.zen/*/webappsstore.sqlite*
+~/.zen/*/xulstore.json
+
+# Outros perfis do Zen (manter apenas Pelo)
+~/.zen/ftlgkpjc.*
+~/.zen/oude1pfq.*
+~/.zen/installs.ini
+~/.zen/profiles.ini
+~/.zen/Profile\ Groups/
+
+# Logs e temporários
+*.log
+*.tmp
+*~
+.DS_Store
