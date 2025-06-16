@@ -40,6 +40,8 @@ Este repositório contém as configurações pessoais (dotfiles) gerenciados via
 .zen/Pelo/              # Zen Browser (perfil Pelo)
 .zshrc                  # Shell principal
 .user.zsh               # Configurações pessoais ZSH
+zshrc/                  # Módulos ZSH adicionais
+└── .fabric.zsh         # Aliases dinâmicos para Fabric AI
 ```
 
 ## ✨ Features Principais
@@ -54,8 +56,15 @@ Este repositório contém as configurações pessoais (dotfiles) gerenciados via
 ### 🤖 Fabric AI Integration
 - 200+ patterns para análise, criação e processamento de conteúdo
 - Script interativo com menu `gum` para fácil uso
+- **Aliases dinâmicos**: Cada pattern vira um comando zsh automático
 - Integração com Obsidian para organização de outputs
 - Patterns para código, documentação, análise e muito mais
+- **YouTube Integration**: Comando `yt` para transcrever vídeos
+
+#### Comandos Fabric Disponíveis
+- `[pattern_name] "título"` → Salva output no Obsidian com data
+- `[pattern_name]` → Executa em modo stream (tempo real)
+- `yt [-t] youtube-link` → Transcreve vídeos (com/sem timestamps)
 
 ### 🎨 Customizações Visuais
 - Múltiplos presets de animação (classic, diablo, minimal, etc.)
@@ -93,6 +102,7 @@ Este repositório contém as configurações pessoais (dotfiles) gerenciados via
 - **gum**: Interface interativa para scripts
 - **fzf**: Fuzzy finder
 - **fastfetch**: Informações do sistema
+- **fabric**: Framework AI com aliases dinâmicos para 200+ patterns
 
 ## 📦 Dependências Principais
 
