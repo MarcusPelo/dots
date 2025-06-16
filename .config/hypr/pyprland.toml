@@ -45,3 +45,12 @@ class = "obsidian"
 size = "85% 70%"
 lazy = true
 
+[scratchpads.spotify]
+animation = "fromBottom"
+command = "spotify"
+class = "spotify"
+size = "85% 70%"
+lazy = true
+unfocus = "hide"
+float = true
+

@@ -41,7 +41,7 @@ alias govault="cd ~/notes/Vortex"
 # yadm
 alias ystatus="yadm status"
 alias yadd="yadm add"
-alias ycommit="yadm commit"
+alias ycommit="yadm commit -am"
 alias ypush="yadm push"
 # bat
 alias cat="bat"
