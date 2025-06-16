@@ -35,6 +35,7 @@ plugins=(
 
 # Fabric
 alias fabric="fabric-ai"
+alias fabric-helper="~/.config/fabric/fabric-ai-helper.sh"
 # Obsidian
 alias govault="cd ~/notes/Vortex"
 # yadm
