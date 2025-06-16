@@ -11,26 +11,12 @@ plugins = [
 ]
 
 
-
 [workspaces_follow_focus]
 max_workspaces = 9
 
 [expose]
 include_special = false
 
-[scratchpads.stb]
-animation = "fromBottom"
-command = "kitty --class kitty-stb sstb"
-class = "kitty-stb"
-lazy = true
-size = "75% 45%"
-
-[scratchpads.stb-logs]
-animation = "fromTop"
-command = "kitty --class kitty-stb-logs stbLog"
-class = "kitty-stb-logs"
-lazy = true
-size = "75% 40%"
 
 [scratchpads.term]
 animation = "fromTop"
@@ -51,3 +37,4 @@ class = "org.pulseaudio.pavucontrol"
 lazy = true
 size = "40% 90%"
 unfocus = "hide"
+

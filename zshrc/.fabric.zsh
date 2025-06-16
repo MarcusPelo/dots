@@ -1,3 +1,8 @@
+
+# ************************************************************
+# Obsidian Patterns
+# ************************************************************
+
 # Define the base directory for Obsidian notes
 obsidian_base="/home/marcus/notes/Vortex/99-Setup/Al Chat History"
 
@@ -28,7 +33,7 @@ for pattern_file in ~/.config/fabric/patterns/*; do
     "
 done
 
-
+# YouTube Transcript
 yt() {
     if [ "$#" -eq 0 ] || [ "$#" -gt 2 ]; then
         echo "Usage: yt [-t | --timestamps] youtube-link"
