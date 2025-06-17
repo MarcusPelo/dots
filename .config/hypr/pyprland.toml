@@ -26,7 +26,7 @@ size = "75% 60%"
 
 [scratchpads.sshmoria]
 animation = "fromTop"
-command = "kitty --class kitty-ssh -e ssh root@10.11.18.100"
+command = "kitty --class kitty-ssh -e ssh moria"
 class = "kitty-ssh"
 size = "75% 60%"
 
@@ -54,3 +54,11 @@ lazy = true
 unfocus = "hide"
 float = true
 
+[scratchpads.msteams]
+animation = "fromTop"
+command = "teams-for-linux-electron"
+class = "teams-for-linux"
+size = "85% 70%"
+lazy = true
+unfocus = "hide"
+float = true

@@ -5,6 +5,7 @@ A robust shell script for interacting with `fabric-ai` patterns, generating cont
 ## 📋 Overview
 
 This script provides an interactive command-line interface that simplifies the use of `fabric-ai` by offering a menu-driven experience for:
+
 - Generating AI content using fabric patterns
 - Managing input and output files
 - Organizing content with proper YAML frontmatter for Obsidian
@@ -25,12 +26,14 @@ This script provides an interactive command-line interface that simplifies the u
 Before using the script, ensure you have the following tools installed:
 
 1. **gum** - Interactive prompts and menus
+
    ```bash
    # Install via package manager or from GitHub
    # https://github.com/charmbracelet/gum
    ```
 
 2. **fzf** - Fuzzy finder for file selection
+
    ```bash
    # Most distributions
    sudo apt install fzf  # Ubuntu/Debian
@@ -38,6 +41,7 @@ Before using the script, ensure you have the following tools installed:
    ```
 
 3. **fabric-ai** - AI pattern framework
+
    ```bash
    # Install fabric-ai
    # https://github.com/danielmiessler/fabric
@@ -50,17 +54,20 @@ Before using the script, ensure you have the following tools installed:
 ## 🛠️ Installation
 
 1. **Clone or download the script**:
+
    ```bash
    # The script is already in your fabric config directory
    /home/marcus/.config/fabric/fabric-ai-helper.sh
    ```
 
 2. **Make it executable**:
+
    ```bash
    chmod +x /home/marcus/.config/fabric/fabric-ai-helper.sh
    ```
 
 3. **Create an alias for easy access** (optional):
+
    ```bash
    echo 'alias fabric-helper="/home/marcus/.config/fabric/fabric-ai-helper.sh"' >> ~/.zshrc
    source ~/.zshrc
@@ -174,6 +181,7 @@ A comprehensive testing setup is provided:
 ```
 
 This creates a safe testing environment in `/tmp/fabric-test/` with:
+
 - Sample input files
 - Test script with modified paths
 - Testing instructions
@@ -181,6 +189,7 @@ This creates a safe testing environment in `/tmp/fabric-test/` with:
 ### Manual Testing
 
 1. **Test Dependencies**:
+
    ```bash
    # Check if required tools are installed
    gum --version
@@ -222,11 +231,13 @@ readonly DEFAULT_MODEL="your-model"
 ### Add Custom Patterns
 
 The script automatically detects available fabric patterns using:
+
 ```bash
 fabric --listpatterns
 ```
 
 To add custom patterns, place them in your fabric patterns directory:
+
 ```bash
 ~/.config/fabric/patterns/your_custom_pattern/
 ```
@@ -236,6 +247,7 @@ To add custom patterns, place them in your fabric patterns directory:
 The script works seamlessly with pattern aliases you may have configured in `.fabric.zsh`. If you have pattern aliases set up (like in your configuration), they will be available through the fabric command used by the script.
 
 Example pattern aliases from `.fabric.zsh`:
+
 ```bash
 # Each pattern becomes a function that can generate content directly
 # e.g., summarize "my-title" - saves to timestamped file
@@ -259,6 +271,7 @@ Example pattern aliases from `.fabric.zsh`:
    - Check PATH includes installation directories
 
 2. **Directory Permissions**:
+
    ```bash
    # Fix permissions if needed
    chmod 755 /home/marcus/notes/Vortex/99-Setup/Al\ Chat\ History/
@@ -266,6 +279,7 @@ Example pattern aliases from `.fabric.zsh`:
    ```
 
 3. **Fabric Pattern Issues**:
+
    ```bash
    # Update patterns (using your alias)
    fabric --updatepatterns
@@ -278,6 +292,7 @@ Example pattern aliases from `.fabric.zsh`:
    ```
 
 4. **Script Execution Issues**:
+
    ```bash
    # Ensure script is executable
    chmod +x /home/marcus/.config/fabric/fabric-ai-helper.sh
@@ -292,6 +307,7 @@ Example pattern aliases from `.fabric.zsh`:
 ### Debug Mode
 
 For detailed debugging, modify the script's first lines:
+
 ```bash
 #!/bin/bash
 set -euxo pipefail  # Add 'x' for debug output

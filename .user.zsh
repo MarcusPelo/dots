@@ -1,63 +1,22 @@
-# ************************************************************
-# Startup
-# ************************************************************
+# ================================================================
+# 🚀 STARTUP CONFIGURATION
+# ================================================================
+# * Terminal initialization and welcome messages
 
 if [[ $- == *i* ]]; then
-    # This is a good place to load graphic/ascii art, display system information, etc.
+    # * This is a good place to load graphic/ascii art, display system information, etc.
+    # ? Change fastfetch parameters to customize system info display
     fastfetch --logo-type kitty
-
 fi
 
 
-# ************************************************************
-# Env Variables
-# ************************************************************
-
-export PATH="$PATH:/home/marcus/.cargo/bin" 
-
-
-# ************************************************************
-# OMZ Plugins
-# ************************************************************
+# ================================================================
+# 🔌 OH-MY-ZSH PLUGINS
+# ================================================================
+# * Additional plugins for enhanced shell functionality
+# ? Uncomment plugins below to enable them
 
 plugins=(
-    "sudo"
-    "aliases"
-    # "git"                     # (default)
-    # "zsh-autosuggestions"     # (default)
-    # "zsh-syntax-highlighting" # (default)
-    # "zsh-completions"         # (default)
+    "sudo"                    
+    "aliases"                 
 )
-
-# ************************************************************
-# Aliases
-# ************************************************************
-
-# Fabric
-alias fabric="fabric-ai"
-alias fabric-helper="~/.config/fabric/fabric-ai-helper.sh"
-# Obsidian
-alias govault="cd ~/notes/Vortex"
-# yadm
-alias ystatus="yadm status"
-alias yadd="yadm add"
-alias ycommit="yadm commit -am"
-alias ypush="yadm push"
-# bat
-alias cat="bat"
-# Hyprctl top commands
-alias hyprtop="hyprctl clients"
-alias hyprdevices="hyprctl devices"
-alias hyprmonitors="hyprctl monitors"
-# ZSH
-alias zshconf="code ~/.user.zsh"
-alias zshexec="exec zsh"
-
-# ************************************************************
-# Sources
-# ************************************************************
-
-# source ~/zshrc/.fabric.zsh if exists
-if [ -f ~/zshrc/.fabric.zsh ]; then
-    source ~/zshrc/.fabric.zsh
-fi

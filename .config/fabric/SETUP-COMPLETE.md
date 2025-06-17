@@ -38,11 +38,13 @@ O script **Fabric AI Helper** foi implementado com sucesso e está pronto para u
 ## 🚀 Como Usar
 
 ### Execução Direta
+
 ```bash
 /home/marcus/.config/fabric/fabric-ai-helper.sh
 ```
 
 ### Criando um Alias (Opcional)
+
 ```bash
 echo 'alias fabric-helper="/home/marcus/.config/fabric/fabric-ai-helper.sh"' >> ~/.zshrc
 source ~/.zshrc
@@ -51,7 +53,7 @@ fabric-helper
 
 ## 🎯 Funcionalidades Principais
 
-1. **AI Helper**: 
+1. **AI Helper**:
    - Seleciona arquivo de input (.md)
    - Escolhe pattern do fabric
    - Define idioma de saída
@@ -91,14 +93,14 @@ O script funciona perfeitamente com sua configuração existente:
 Para testar imediatamente:
 
 1. Execute o script: `/home/marcus/.config/fabric/fabric-ai-helper.sh`
-2. Escolha "AI Helper" 
+2. Escolha "AI Helper"
 3. Selecione um dos arquivos de exemplo
 4. Escolha um pattern (ex: `summarize`)
 5. Use idioma padrão (en-US)
 6. Nomeie o arquivo de output
 7. Veja o resultado gerado!
 
-## 🎉 Pronto para Uso!
+## 🎉 Pronto para Uso
 
 O script está completamente funcional e integrado ao seu workflow fabric existente. Aproveite a automação! 🚀
 
