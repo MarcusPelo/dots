@@ -394,15 +394,30 @@ EOF
 
 # Testar conexão SSH
 test_ssh_connection() {
-    local host="$1"
-    local port="${2:-22}"
+    local target="$1"
+    local port="$2"
     
-    log "STEP" "Testando conexão SSH..."
+    log "STEP" "Testando conexão SSH para $target..."
     
-    if ssh -o ConnectTimeout=10 -p "$port" "$host" 'echo "✅ Conexão SSH funcionando!"'; then
-        log "SUCCESS" "Teste de conexão SSH bem-sucedido!"
+    local ssh_cmd="ssh -o ConnectTimeout=10 -o BatchMode=yes"
+    
+    # Determinar se o target é um alias SSH (sem porta explícita) ou IP/hostname direto
+    if [[ -n "$port" ]]; then
+        # Conexão direta com IP e porta
+        ssh_cmd="$ssh_cmd -p $port $target"
     else
-        log "WARNING" "Teste de conexão SSH falhou"
+        # Usar alias SSH configurado (que já tem host/porta/user configurados)
+        ssh_cmd="$ssh_cmd $target"
+    fi
+    
+    log "DEBUG" "Executando: $ssh_cmd 'echo \"✅ Conexão SSH funcionando!\"'"
+    
+    if $ssh_cmd 'echo "✅ Conexão SSH funcionando!"' 2>/dev/null; then
+        log "SUCCESS" "Teste de conexão SSH bem-sucedido para $target!"
+        return 0
+    else
+        log "WARNING" "Teste de conexão SSH falhou para $target"
+        return 1
     fi
 }
 
@@ -456,7 +471,7 @@ configure_proxmox_ssh() {
     # Configurar SSH config
     configure_ssh_config_entry "$PROXMOX_HOSTNAME" "$host_ip" "$port" "root"
     
-    # Testar conexão
+    # Testar conexão usando alias SSH configurado
     if gum confirm "Testar conexão SSH?"; then
         test_ssh_connection "$PROXMOX_HOSTNAME"
     fi
@@ -502,7 +517,7 @@ configure_lxc_ssh() {
     if check_ssh_key_installed "$container_ip" "$container_port"; then
         gum style --foreground 2 "✅ Chave SSH já está configurada!"
         if gum confirm "Testar conexão SSH?"; then
-            test_ssh_connection "$container_alias"
+            test_ssh_connection "$container_ip" "$container_port"
         fi
         return 0
     fi
@@ -516,7 +531,7 @@ configure_lxc_ssh() {
     # Configurar SSH config
     configure_ssh_config_entry "$container_alias" "$container_ip" "$container_port" "root"
     
-    # Testar conexão
+    # Testar conexão usando alias SSH configurado
     if gum confirm "Testar conexão SSH?"; then
         test_ssh_connection "$container_alias"
     fi

@@ -531,6 +531,21 @@ source ~/.zshrc
 p10k configure
 ```
 
+## 🔧 Atualizações e Melhorias
+
+### Lógica SSH Aprimorada (v2.1)
+- **Distinção Local vs Remoto**: A função `test_ssh_connection()` agora diferencia corretamente entre:
+  - Conexões diretas (IP + porta): `ssh -p PORT IP`
+  - Conexões via alias SSH configurado: `ssh ALIAS`
+- **Consistência**: Configuração inicial usa IP/porta direta, testes subsequentes usam alias configurado
+- **Melhor Debug**: Logs mais detalhados sobre o tipo de conexão sendo testada
+- **Robustez**: Tratamento de erro melhorado para diferentes tipos de conexão
+
+### Detecção de Dependências
+- Auto-instalação robusta de `gum` e `fzf`
+- Fallback para instalação manual se repositórios falharem
+- Detecção inteligente de versões e arquiteturas
+
 ## 🎉 Resultado Final
 
 Após a execução completa, você terá:

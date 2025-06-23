@@ -47,6 +47,7 @@ Este repositório contém uma versão completamente reformulada dos scripts de c
 ### 🔧 Automação Inteligente
 - **Detecção automática**: Instala dependências se necessário
 - **Listagem de containers**: Busca automática de containers LXC
+- **SSH Inteligente**: Diferencia conexões diretas e via alias configurado
 - **Verificação SSH**: Testa conexões antes de configurar
 - **Backup automático**: Proteção das configurações existentes
 
@@ -56,6 +57,11 @@ Este repositório contém uma versão completamente reformulada dos scripts de c
 - 📦 **Gerenciamento de pacotes extras** com seleção múltipla
 - 🔧 **Backup e restore** de configurações
 - 📊 **Visualização de logs** interativa
+
+### 🆕 Última Atualização (v2.1)
+- **Lógica SSH Melhorada**: Distinção correta entre conexões locais/remotas e aliases
+- **Debug Aprimorado**: Logs mais detalhados para troubleshooting
+- **Robustez**: Melhor tratamento de erros em conexões SSH
 
 ## 🛠️ Dependências
 
