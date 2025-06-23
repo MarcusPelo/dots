@@ -104,21 +104,198 @@ install_fzf() {
 
 # Instalar gum
 install_gum() {
-    local arch="$1"
+    local os_type="$1"
+    local arch="$2"
     
     log "STEP" "Instalando gum..."
     
+    # Tentar métodos de instalação por ordem de preferência
+    case "$os_type" in
+        "ubuntu"|"debian")
+            log "INFO" "Tentando instalação via repositório Debian..."
+            if install_gum_debian; then
+                log "SUCCESS" "gum instalado via repositório Debian"
+                return 0
+            fi
+            log "WARNING" "Falha na instalação via repositório, tentando método manual..."
+            ;;
+        "fedora"|"rhel"|"centos")
+            log "INFO" "Tentando instalação via repositório RPM..."
+            if install_gum_rpm; then
+                log "SUCCESS" "gum instalado via repositório RPM"
+                return 0
+            fi
+            log "WARNING" "Falha na instalação via repositório, tentando método manual..."
+            ;;
+        "arch"|"manjaro")
+            log "INFO" "Tentando instalação via AUR..."
+            if install_gum_arch; then
+                log "SUCCESS" "gum instalado via AUR"
+                return 0
+            fi
+            log "WARNING" "Falha na instalação via AUR, tentando método manual..."
+            ;;
+    esac
+    
+    # Método manual como fallback
+    log "INFO" "Tentando instalação manual..."
+    if install_gum_manual "$arch"; then
+        log "SUCCESS" "gum instalado via método manual"
+    else
+        log "ERROR" "Falha na instalação do gum"
+        return 1
+    fi
+}
+
+# Instalar gum via repositório Debian/Ubuntu
+install_gum_debian() {
+    if ! command -v curl &> /dev/null; then
+        sudo apt update && sudo apt install -y curl
+    fi
+    
+    # Adicionar repositório e instalar
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+    sudo apt update && sudo apt install -y gum
+}
+
+# Instalar gum via repositório RPM (Fedora/RHEL/CentOS)
+install_gum_rpm() {
+    if command -v dnf &> /dev/null; then
+        echo '[charm]
+name=Charm
+baseurl=https://repo.charm.sh/yum/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
+        sudo dnf install -y gum
+    elif command -v yum &> /dev/null; then
+        echo '[charm]
+name=Charm
+baseurl=https://repo.charm.sh/yum/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
+        sudo yum install -y gum
+    else
+        return 1
+    fi
+}
+
+# Instalar gum via AUR (Arch Linux)
+install_gum_arch() {
+    if command -v yay &> /dev/null; then
+        yay -S --noconfirm gum
+    elif command -v paru &> /dev/null; then
+        paru -S --noconfirm gum
+    else
+        # Tentar pacman (se estiver nos repositórios oficiais)
+        sudo pacman -S --noconfirm gum 2>/dev/null || return 1
+    fi
+}
+
+# Instalar gum manualmente via GitHub releases
+install_gum_manual() {
+    local arch="$1"
+    
+    # Verificar dependências
+    if ! command -v curl &> /dev/null && ! command -v wget &> /dev/null; then
+        log "ERROR" "curl ou wget é necessário para instalação manual"
+        return 1
+    fi
+    
+    # Detectar versão mais recente
+    log "INFO" "Detectando versão mais recente do gum..."
+    local latest_version
+    if command -v curl &> /dev/null; then
+        latest_version=$(curl -s https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    else
+        latest_version=$(wget -qO- https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    fi
+    
+    if [[ -z "$latest_version" ]]; then
+        log "WARNING" "Não foi possível detectar a versão, usando 'latest'"
+        latest_version="latest"
+    else
+        log "INFO" "Versão detectada: $latest_version"
+    fi
+    
     # URL para download
-    local gum_url="https://github.com/charmbracelet/gum/releases/latest/download/gum_Linux_${arch}.tar.gz"
+    local gum_url
+    if [[ "$latest_version" == "latest" ]]; then
+        gum_url="https://github.com/charmbracelet/gum/releases/latest/download/gum_Linux_${arch}.tar.gz"
+    else
+        gum_url="https://github.com/charmbracelet/gum/releases/download/${latest_version}/gum_Linux_${arch}.tar.gz"
+    fi
     
-    # Baixar e instalar
-    wget -q "$gum_url" -O /tmp/gum.tar.gz
-    tar -xzf /tmp/gum.tar.gz -C /tmp/
-    sudo mv /tmp/gum /usr/local/bin/
-    sudo chmod +x /usr/local/bin/gum
-    rm -f /tmp/gum.tar.gz
+    log "INFO" "Baixando de: $gum_url"
     
-    log "SUCCESS" "gum instalado"
+    # Criar diretório temporário
+    local temp_dir=$(mktemp -d)
+    local gum_archive="$temp_dir/gum.tar.gz"
+    
+    # Baixar arquivo
+    if command -v curl &> /dev/null; then
+        if ! curl -fsSL "$gum_url" -o "$gum_archive"; then
+            log "ERROR" "Falha ao baixar gum com curl"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+    else
+        if ! wget -q "$gum_url" -O "$gum_archive"; then
+            log "ERROR" "Falha ao baixar gum com wget"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+    fi
+    
+    # Verificar se arquivo foi baixado
+    if [[ ! -f "$gum_archive" ]] || [[ ! -s "$gum_archive" ]]; then
+        log "ERROR" "Arquivo baixado está vazio ou não existe"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Extrair arquivo
+    log "INFO" "Extraindo arquivo..."
+    if ! tar -xzf "$gum_archive" -C "$temp_dir"; then
+        log "ERROR" "Falha ao extrair arquivo"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Encontrar binário do gum
+    local gum_binary=$(find "$temp_dir" -name "gum" -type f -executable | head -1)
+    if [[ -z "$gum_binary" ]]; then
+        log "ERROR" "Binário do gum não encontrado no arquivo extraído"
+        ls -la "$temp_dir"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Instalar binário
+    log "INFO" "Instalando binário em /usr/local/bin/"
+    if sudo mv "$gum_binary" /usr/local/bin/gum; then
+        sudo chmod +x /usr/local/bin/gum
+        log "SUCCESS" "gum instalado em /usr/local/bin/gum"
+    else
+        log "ERROR" "Falha ao mover binário para /usr/local/bin/"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Limpeza
+    rm -rf "$temp_dir"
+    
+    # Verificar instalação
+    if command -v gum &> /dev/null; then
+        log "SUCCESS" "gum instalado com sucesso: $(gum --version)"
+        return 0
+    else
+        log "ERROR" "gum não está disponível após instalação"
+        return 1
+    fi
 }
 
 # Verificar e instalar dependências
@@ -143,7 +320,7 @@ setup_dependencies() {
     if command -v gum &> /dev/null; then
         log "SUCCESS" "gum já está instalado: $(gum --version)"
     else
-        install_gum "$arch"
+        install_gum "$os_type" "$arch"
     fi
 }
 
