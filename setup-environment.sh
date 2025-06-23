@@ -209,14 +209,33 @@ install_gum_manual() {
     log "INFO" "Detectando versão mais recente do gum..."
     local latest_version
     if command -v curl &> /dev/null; then
-        latest_version=$(curl -s https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        latest_version=$(curl -s https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | head -1)
     else
-        latest_version=$(wget -qO- https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        latest_version=$(wget -qO- https://api.github.com/repos/charmbracelet/gum/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | head -1)
     fi
     
-    if [[ -z "$latest_version" ]]; then
-        log "WARNING" "Não foi possível detectar a versão, usando 'latest'"
-        latest_version="latest"
+    # Verificar se conseguimos obter a versão
+    if [[ -z "$latest_version" ]] || [[ "$latest_version" == "null" ]]; then
+        log "WARNING" "Não foi possível detectar a versão via API, tentando método alternativo..."
+        
+        # Método alternativo: tentar obter do redirect
+        if command -v curl &> /dev/null; then
+            latest_version=$(curl -sI https://github.com/charmbracelet/gum/releases/latest | grep -i location | sed -E 's/.*\/tag\/([^[:space:]]*).*/\1/' | tr -d '\r\n')
+        else
+            latest_version=$(wget --server-response --spider https://github.com/charmbracelet/gum/releases/latest 2>&1 | grep -i location | sed -E 's/.*\/tag\/([^[:space:]]*).*/\1/' | tr -d '\r\n')
+        fi
+    fi
+    
+    if [[ -z "$latest_version" ]] || [[ "$latest_version" == "null" ]]; then
+        log "WARNING" "Não foi possível detectar a versão automaticamente"
+        log "INFO" "Tentando versões conhecidas..."
+        # Lista de versões conhecidas como fallback
+        local known_versions=("v0.16.1" "v0.16.0" "v0.15.0" "v0.14.0")
+        for version in "${known_versions[@]}"; do
+            log "INFO" "Tentando versão: $version"
+            latest_version="$version"
+            break
+        done
     else
         log "INFO" "Versão detectada: $latest_version"
     fi
@@ -224,12 +243,34 @@ install_gum_manual() {
     # URL para download
     local gum_url
     if [[ "$latest_version" == "latest" ]]; then
+        # Para latest, usar URL sem versão específica
         gum_url="https://github.com/charmbracelet/gum/releases/latest/download/gum_Linux_${arch}.tar.gz"
     else
-        gum_url="https://github.com/charmbracelet/gum/releases/download/${latest_version}/gum_Linux_${arch}.tar.gz"
+        # Para versão específica, usar formato: gum_VERSION_Linux_ARCH.tar.gz
+        # Remover 'v' do início da versão se existir
+        local version_number="${latest_version#v}"
+        gum_url="https://github.com/charmbracelet/gum/releases/download/${latest_version}/gum_${version_number}_Linux_${arch}.tar.gz"
     fi
     
     log "INFO" "Baixando de: $gum_url"
+    
+    # Verificar se a URL existe antes de baixar
+    log "INFO" "Verificando disponibilidade do arquivo..."
+    if command -v curl &> /dev/null; then
+        if ! curl -fsSL --head "$gum_url" >/dev/null 2>&1; then
+            log "WARNING" "URL não encontrada: $gum_url"
+            log "INFO" "Tentando URL alternativa (latest)..."
+            gum_url="https://github.com/charmbracelet/gum/releases/latest/download/gum_Linux_${arch}.tar.gz"
+        fi
+    else
+        if ! wget --spider "$gum_url" >/dev/null 2>&1; then
+            log "WARNING" "URL não encontrada: $gum_url"
+            log "INFO" "Tentando URL alternativa (latest)..."
+            gum_url="https://github.com/charmbracelet/gum/releases/latest/download/gum_Linux_${arch}.tar.gz"
+        fi
+    fi
+    
+    log "INFO" "URL final: $gum_url"
     
     # Criar diretório temporário
     local temp_dir=$(mktemp -d)
