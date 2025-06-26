@@ -1,0 +1,25 @@
+
+/* User custom styles for Waybar */
+
+
+/* Waybar global styles */
+* {
+    border-radius: 0em;
+    font-family: "JetBrainsMono Nerd Font","JetBrainsMono Nerd Font";
+    font-size: 11px;
+}
+
+
+/* @define-color bar-bg rgba(0, 0, 0, 0);
+
+
+@define-color main-bg rgba(29,32,33,0.8);
+@define-color main-fg rgba(214,214,214,0.8);
+
+
+@define-color wb-act-bg rgba(194,99,79,0.4);
+@define-color wb-act-fg rgba(252,252,252,1);
+@define-color wb-hvr-bg rgba(61,61,61,0.4);
+@define-color wb-hvr-fg rgba(214,214,214,0.8); */
+
+
