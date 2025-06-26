@@ -1,82 +1,53 @@
-# 🚀 Proxmox Setup Scripts - Versão Interativa
+# 🏠 Dotfiles - Marcus
 
-Este repositório contém uma versão completamente reformulada dos scripts de configuração do Proxmox, agora com **interface interativa moderna** usando `gum` e `fzf`.
+## 📋 Overview
 
-## � Arquivos Principais
+Este repositório contém as configurações pessoais (dotfiles) gerenciados via [yadm](https://yadm.io/), organizando um ambiente de trabalho moderno e produtivo baseado em Hyprland (Wayland).
 
-### 🎯 Scripts de Produção
-- **`proxmox-setup-interactive.sh`** - Script principal com interface interativa
-- **`setup-environment.sh`** - Configurador de ambiente e dependências
+## 🖥️ Setup Principal
 
-### 🧪 Scripts de Teste e Demonstração  
-- **`test-interactive.sh`** - Demonstração e teste das funcionalidades
-- **`proxmox-setup.sh`** - Versão anterior (sem interface interativa)
+### Desktop Environment
+- **Window Manager**: Hyprland (baseado no projeto HyDE)
+- **Terminal**: Kitty com configurações customizadas
+- **Shell**: Zsh com Oh My Zsh
+- **Browser**: Zen Browser com extensões produtividade
+- **Status Bar**: Waybar com módulos personalizados
 
-### 📚 Documentação
-- **`README-proxmox-setup.md`** - Documentação completa da versão interativa
-- **`README.md`** - Este arquivo
+### Aplicações & Ferramentas
+- **Editor Principal**: Visual Studio Code
+- **AI Assistant**: Fabric (danielmiessler/fabric) com 200+ patterns
+- **Launcher**: Rofi com temas customizados
+- **Controle Audio**: PavuControl via scratchpads
+- **Notas**: Obsidian (integrado via scratchpads)
+- **Música**: Spotify (via scratchpad)
 
-## 🚀 Início Rápido
+## 📁 Estrutura Principal
 
-### 1. Configurar Ambiente
-```bash
-# Configurar dependências automaticamente
-./setup-environment.sh
+```
+.config/
+├── hypr/               # Configurações Hyprland
+│   ├── hyprland.conf   # Configuração principal
+│   ├── keybindings.conf # Atalhos de teclado
+│   ├── pyprland.toml   # Scratchpads e plugins
+│   ├── animations/     # Presets de animação
+│   └── themes/         # Temas e cores
+├── kitty/              # Terminal Kitty
+├── fabric/             # AI Patterns e Scripts
+│   ├── patterns/       # 200+ patterns para IA
+│   └── fabric-ai-helper.sh # Script interativo
+├── waybar/             # Barra de status
+└── rofi/               # Launcher
+.zen/Pelo/              # Zen Browser (perfil Pelo)
+.zshrc                  # Shell principal
+.user.zsh               # Configurações pessoais ZSH
+zshrc/                  # Módulos ZSH adicionais
+└── .fabric.zsh         # Aliases dinâmicos para Fabric AI
 ```
 
-### 2. Executar Script Principal
-```bash
-# Interface interativa completa
-./proxmox-setup-interactive.sh
-```
+## ✨ Features Principais
 
-### 3. Testar (Opcional)
-```bash
-# Demonstração das funcionalidades
-./test-interactive.sh
-```
-
-## 🎨 Principais Melhorias
-
-### ✨ Interface Moderna
-- **gum**: Menus elegantes, inputs e confirmações visuais
-- **fzf**: Seleção fuzzy para containers e opções
-- **Cores e ícones**: Interface visual atraente
-- **Navegação intuitiva**: Menus estruturados e fáceis de usar
-
-### 🔧 Automação Inteligente
-- **Detecção automática**: Instala dependências se necessário
-- **Listagem de containers**: Busca automática de containers LXC
-- **SSH Inteligente**: Diferencia conexões diretas e via alias configurado
-- **Verificação SSH**: Testa conexões antes de configurar
-- **Backup automático**: Proteção das configurações existentes
-
-### 🎯 Funcionalidades Principais
-- 🔐 **Configuração SSH** para Proxmox e containers LXC
-- 🐚 **Instalação Zsh** com oh-my-zsh (em desenvolvimento)
-- 📦 **Gerenciamento de pacotes extras** com seleção múltipla
-- 🔧 **Backup e restore** de configurações
-- 📊 **Visualização de logs** interativa
-
-### 🆕 Última Atualização (v2.1)
-- **Lógica SSH Melhorada**: Distinção correta entre conexões locais/remotas e aliases
-- **Debug Aprimorado**: Logs mais detalhados para troubleshooting
-- **Robustez**: Melhor tratamento de erros em conexões SSH
-
-## 🛠️ Dependências
-
-### Automáticas (instaladas pelo script)
-- **gum** - Interface interativa elegante
-- **fzf** - Fuzzy finder para seleções
-
-### Opcionais
-- **ssh** - Para conexões remotas
-- **git** - Para clonagem de repositórios
-- **wget/curl** - Para downloads
-
----
-
-**Desenvolvido com ❤️ para simplificar a administração do Proxmox** 🚀
+### 🎯 Scratchpads (via pyprland)
+- **Terminal**: Kitty dropdown (75% x 60%)
 - **SSH**: Acesso rápido ao servidor Moria
 - **Volume**: Controle PavuControl (lateral direita)
 - **Obsidian**: Vault Vortex para notas
