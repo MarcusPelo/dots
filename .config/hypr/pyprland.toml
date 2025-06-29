@@ -8,6 +8,8 @@ plugins = [
   "expose",
   "shift_monitors",
   "workspaces_follow_focus",
+  "shortcuts_menu",
+  "layout_center",
 ]
 
 
@@ -51,7 +53,6 @@ command = "spotify"
 class = "spotify"
 size = "85% 70%"
 lazy = true
-unfocus = "hide"
 float = true
 
 [scratchpads.msteams]
@@ -62,3 +63,10 @@ size = "85% 70%"
 lazy = true
 unfocus = "hide"
 float = true
+
+[layout_center]
+margin = [60, 60]
+next = "movefocus r"
+prev = "movefocus l"
+next2 = "movefocus d"
+prev2 = "movefocus u"
