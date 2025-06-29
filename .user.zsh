@@ -18,5 +18,14 @@ fi
 
 plugins=(
     "sudo"                    
-    "aliases"                 
+    "aliases"      
+    "vscode"   
+    "thefuck"        
+    "copyfile"
+    "ssh"
+    "tailscale"
 )
+
+# * Oh My Posh initialization
+POSH=agnoster
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/EDM115-newline.omp.json)"

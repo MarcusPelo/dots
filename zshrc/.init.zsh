@@ -4,6 +4,10 @@
 # ================================================================
 # * Load additional configuration files
 
+# * Oh My Posh initialization
+POSH=agnoster
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/EDM115-newline.omp.json)"
+
 # * Source fabric AI configuration if it exists
 # ? Contains dynamic pattern functions and YouTube transcript tools
 if [ -f ~/zshrc/.fabric.zsh ]; then
