@@ -50,11 +50,12 @@ alias cat="bat"                                    # Use bat for syntax highligh
 # * 🪟 Hyprland Control Commands
 # * ──────────────────────────────────────────────────────────────
 alias hyprtop="hyprctl clients"                    # List all open windows
+alias hclients="run_hypr_clients"                   # List all clients
 alias hyprdevices="hyprctl devices"                # Show input devices
 alias hyprmonitors="hyprctl monitors"              # Display monitor information
 
 # * ──────────────────────────────────────────────────────────────
 # * 🐚 ZSH Configuration
 # * ──────────────────────────────────────────────────────────────
-alias zshconf="code ~/.user.zsh"                   # Edit ZSH configuration
+alias zshconf="$EDITOR ~/.user.zsh"                   # Edit ZSH configuration
 alias zshexec="exec zsh"                           # Reload ZSH configuration
